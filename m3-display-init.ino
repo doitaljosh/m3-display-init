@@ -5,8 +5,6 @@
 #define ADDR_SER 0x0c // DS90UB949
 #define ADDR_DES 0x2c // DS90UB948 (inside Tesla display panel)
 
-byte dumpBuffer[127];
-
 /*
  * @brief Set register regToWrite to value dataToWrite at address addrToWrite.
  * @param addrToWrite 7-bit I2C address

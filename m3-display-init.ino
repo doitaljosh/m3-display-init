@@ -7,9 +7,9 @@
 
 /*
  * @brief Set register regToWrite to value dataToWrite at address addrToWrite.
- * @param addrToWrite 7-bit I2C address
- * @param regToWrite 8-bit I2C register
- * @param dataToWrite 8-bit register value
+ * @addrToWrite 7-bit I2C address
+ * @regToWrite 8-bit I2C register
+ * @dataToWrite 8-bit register value
  */
 int i2cSet(uint8_t addrToWrite, uint8_t regToWrite, uint8_t dataToWrite) {
   Wire.beginTransmission(addrToWrite);
@@ -24,8 +24,8 @@ int i2cSet(uint8_t addrToWrite, uint8_t regToWrite, uint8_t dataToWrite) {
 
 /*
  * @brief Returns a register value read from regToRead at address addrToRead.
- * @param addrToRead 7-bit I2C address
- * @param regToRead 8-bit I2C register
+ * @addrToRead 7-bit I2C address
+ * @regToRead 8-bit I2C register
  * @return Register value read from regToRead
  */
 uint8_t i2cGet(uint8_t addrToRead, uint8_t regToRead) {
@@ -42,9 +42,9 @@ uint8_t i2cGet(uint8_t addrToRead, uint8_t regToRead) {
 
 /*
  * @brief Attempts to write to an I2C register then reads it back to verify it has been written. A maximum of 3 attempts will be made to verify a write. 
- * @param addrToWrite 7-bit I2C address
- * @param regToWrite 8-bit I2C register
- * @param dataToWrite 8-bit register value
+ * @addrToWrite 7-bit I2C address
+ * @regToWrite 8-bit I2C register
+ * @dataToWrite 8-bit register value
  * @return Was write successful?
  */
 bool i2cWriteReadCheck(uint8_t addrToWrite, uint8_t regToWrite, uint8_t dataToWrite) {
@@ -60,9 +60,10 @@ bool i2cWriteReadCheck(uint8_t addrToWrite, uint8_t regToWrite, uint8_t dataToWr
 
 /*
  * @brief Read or write from the serializer
- * @param direction 0=write, 1=read
- * @param reg 8-bit register to read or write
- * @param value Value to write
+ * @direction 0=write, 1=read
+ * @reg 8-bit register to read or write
+ * @value Value to write
+ * @return Result
  */
 uint8_t serializer(int direction, uint8_t reg, uint8_t value) {
   switch(direction) {
@@ -71,16 +72,17 @@ uint8_t serializer(int direction, uint8_t reg, uint8_t value) {
     case 1:
       return i2cGet(ADDR_SER, reg);
     default:
+      // We shouldn't get here
       return 0;
   }
 }
 
 /*
  * @brief Read or write from the deserializer
- * @param direction 0=write, 1=read
- * @param reg 8-bit register to read or write
- * @param value Value to write
- * @return 
+ * @direction 0=write, 1=read
+ * @reg 8-bit register to read or write
+ * @value Value to write
+ * @return Result
  */
 uint8_t deserializer(int direction, uint8_t reg, uint8_t value) {
   switch(direction) {
@@ -89,6 +91,7 @@ uint8_t deserializer(int direction, uint8_t reg, uint8_t value) {
     case 1:
       return i2cGet(ADDR_DES, reg);
     default:
+      // We shouldn't get here
       return 0;
   }
 }
